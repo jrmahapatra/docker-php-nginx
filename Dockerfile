@@ -2,6 +2,7 @@ ARG ALPINE_VERSION=3.16
 FROM alpine:${ALPINE_VERSION}
 LABEL Maintainer="Tim de Pater <code@trafex.nl>"
 LABEL Description="Lightweight container with Nginx 1.22 & PHP 8.1 based on Alpine Linux."
+
 # Setup document root
 WORKDIR /var/www/html
 
@@ -24,10 +25,27 @@ RUN apk add --no-cache \
   php81-session \
   php81-xml \
   php81-xmlreader \
+  php81-fileinfo \
+  php81-simplexml \
+  php81-xmlwriter \
+  php81-zip \
+  php81-tokenizer \
+  php81-pdo \
+  php81-pdo_dblib \
+  php81-pdo_mysql \
+  php81-pdo_pgsql \
+  php81-pdo_sqlite \
+  php81-mysqlnd \
   supervisor
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php81 /usr/bin/php
+
+# Install composer from the official image
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN mkdir /.composer
+RUN chown -R nobody.nobody /.composer
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
@@ -46,10 +64,10 @@ RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 USER nobody
 
 # Add application
-COPY --chown=nobody src/ /var/www/html/
+# COPY --chown=nobody ./ /var/www/html/
 
 # Expose the port nginx is reachable on
-EXPOSE 8080
+EXPOSE 80
 
 # Let supervisord start nginx & php-fpm
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
