@@ -58,6 +58,16 @@ RUN apk add --no-cache \
 # Remove Cache
 RUN rm -rf /var/cache/apk/*
 
+
+# Install composer from the official image
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+
+RUN mkdir /.composer
+
+RUN chown -R nobody.nobody /.composer
+
+
+
 # Configure PHP-FPM
 COPY config/nginx.conf /etc/nginx/nginx.conf
 COPY config/fpm-pool.conf /etc/php7/php-fpm.d/www.conf
