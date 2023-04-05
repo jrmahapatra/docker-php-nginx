@@ -44,10 +44,36 @@ RUN apk add --no-cache \
     php8-pdo_sqlite \
     php8-tokenizer \
     php8-pecl-redis \
+    php8-dev \
+    php8-pear \
     supervisor
 
 # Create symlink so programs depending on `php` still function
 # RUN ln -s /usr/bin/php8 /usr/bin/php
+
+# SQL SERVER DRIVER
+RUN apk --no-cache add g++ gcc unixodbc-dev gnupg
+RUN apk add --no-cache make
+
+#Download the desired package(s)
+RUN curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.10.2.1-1_amd64.apk
+RUN curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.10.1.1-1_amd64.apk
+
+#(Optional) Verify signature, if 'gpg' is missing install it using 'apk add gnupg':
+RUN curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/msodbcsql17_17.10.2.1-1_amd64.sig
+RUN curl -O https://download.microsoft.com/download/e/4/e/e4e67866-dffd-428c-aac7-8d28ddafb39b/mssql-tools_17.10.1.1-1_amd64.sig
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc  | gpg --import -
+
+#Install the package(s)
+RUN apk add --allow-untrusted msodbcsql17_17.10.2.1-1_amd64.apk
+RUN apk add --allow-untrusted mssql-tools_17.10.1.1-1_amd64.apk
+
+RUN set -xe \    
+    && pecl install sqlsrv pdo_sqlsrv
+
+# RUN echo extension=sqlsrv.so >> /etc/php8/php.ini
+# RUN echo extension=pdo_sqlsrv.so >> /etc/php8/php.ini
 
 # Install composer from the official image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
