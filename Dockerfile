@@ -46,6 +46,8 @@ RUN apk add --no-cache \
     php8-pecl-redis \
     php8-dev \
     php8-pear \
+    php8-exif \
+    php8-ctype \
     supervisor
 
 # Create symlink so programs depending on `php` still function
