@@ -36,10 +36,38 @@ RUN apk add --no-cache \
   php81-pdo_pgsql \
   php81-pdo_sqlite \
   php81-mysqlnd \
+  php81-pecl \
   supervisor
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php81 /usr/bin/php
+
+
+
+# ## Apple Silicon
+RUN apk --no-cache add g++ gcc unixodbc-dev gnupg gpg
+RUN apk add --no-cache make
+ARG architecture=arm64
+#Download the desired package(s)
+RUN curl -O https://download.microsoft.com/download/3/5/5/355d7943-a338-41a7-858d-53b259ea33f5/msodbcsql18_18.3.2.1-1_$architecture.apk
+RUN curl -O https://download.microsoft.com/download/3/5/5/355d7943-a338-41a7-858d-53b259ea33f5/mssql-tools18_18.3.1.1-1_$architecture.apk
+
+
+#(Optional) Verify signature, if 'gpg' is missing install it using 'apk add gnupg':
+RUN curl -O https://download.microsoft.com/download/3/5/5/355d7943-a338-41a7-858d-53b259ea33f5/msodbcsql18_18.3.2.1-1_$architecture.sig
+RUN curl -O https://download.microsoft.com/download/3/5/5/355d7943-a338-41a7-858d-53b259ea33f5/mssql-tools18_18.3.1.1-1_$architecture.sig
+
+RUN curl https://packages.microsoft.com/keys/microsoft.asc   | gpg --import -
+# RUN gpg --verify msodbcsql18_18.3.2.1-1_$architecture.sig msodbcsql18_18.3.2.1-1_$architecture.apk 
+# RUN gpg --verify mssql-tools18_18.3.1.1-1_$architecture.sig mssql-tools18_18.3.1.1-1_$architecture.apk
+
+
+#Install the package(s)
+RUN  apk add --allow-untrusted msodbcsql18_18.3.2.1-1_$architecture.apk
+RUN  apk add --allow-untrusted mssql-tools18_18.3.1.1-1_$architecture.apk
+RUN pecl install sqlsrv pdo_sqlsrv
+
+
 
 # Install composer from the official image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
