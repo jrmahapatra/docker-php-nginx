@@ -81,6 +81,8 @@ RUN apk add --no-cache \
 # RUN set -xe \    
 #     && pecl install sqlsrv pdo_sqlsrv
 
+
+
 # RUN echo extension=sqlsrv.so >> /etc/php8/php.ini
 # RUN echo extension=pdo_sqlsrv.so >> /etc/php8/php.ini
 
