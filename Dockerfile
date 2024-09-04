@@ -53,12 +53,14 @@ RUN apk add --no-cache \
     autoconf \
     supervisor \
     nodejs \
-    npm
+    npm \
+    chromium
 
 # Create symlink so programs depending on `php` still function
 # RUN ln -s /usr/bin/php8 /usr/bin/php
 
-
+# RUN /usr/bin/npm install puppeteer
+# RUN npx puppeteer browsers install chrome
 
 ## Intel x86
 # SQL SERVER DRIVER
