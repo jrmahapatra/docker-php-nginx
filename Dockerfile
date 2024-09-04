@@ -51,7 +51,9 @@ RUN apk add --no-cache \
     php8-xmlreader \
     php8-dev \
     autoconf \
-    supervisor
+    supervisor \
+    nodejs \
+    npm
 
 # Create symlink so programs depending on `php` still function
 # RUN ln -s /usr/bin/php8 /usr/bin/php
