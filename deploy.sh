@@ -1,5 +1,1 @@
-docker image rm mjanaki/php-nginx-alpine-sql:1.0
-
-docker build --tag mjanaki/php-nginx-alpine-sql:1.0 .
-
-docker push mjanaki/php-nginx-alpine-sql:1.0
+docker buildx build --platform linux/arm64,linux/amd64 -t mjanaki/php82-intl-alpine-nginx:latest mjanaki/php82-silicon-alpine-nginx . --push

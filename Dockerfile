@@ -1,5 +1,5 @@
-ARG ALPINE_VERSION=3.16
-FROM alpine:${ALPINE_VERSION}
+FROM alpine:latest
+
 LABEL Maintainer="Janaki Mahapatra <mailme@mjanaki.com>"
 LABEL Description="Lightweight container with Nginx 1.22 & PHP 8 based on Alpine Linux."
 
@@ -19,44 +19,44 @@ RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 RUN apk add --no-cache \
     curl \
     nginx \
-    php81 \
-    php81-common \
-    php81-fpm \
-    php81-intl \
-    php81-gd \
-    php81-mysqli \
-    php81-pdo \
-    php81-opcache \
-    php81-zip \
-    php81-phar \
-    php81-iconv \
-    php81-cli \
-    php81-curl \
-    php81-openssl \
-    php81-mbstring \
-    php81-tokenizer \
-    php81-fileinfo \
-    php81-json \
-    php81-xml \
-    php81-xmlwriter \
-    php81-simplexml \
-    php81-dom \
-    php81-pdo_mysql \
-    php81-pdo_sqlite \
-    php81-tokenizer \
-    php81-pecl-redis \
-    php81-dev \
-    php81-pear \
-    php81-exif \
-    php81-ctype \
-    php81-xmlreader \
-    php81-dev \
+    php82 \
+    php82-common \
+    php82-fpm \
+    php82-intl \
+    php82-gd \
+    php82-mysqli \
+    php82-pdo \
+    php82-opcache \
+    php82-zip \
+    php82-phar \
+    php82-iconv \
+    php82-cli \
+    php82-curl \
+    php82-openssl \
+    php82-mbstring \
+    php82-tokenizer \
+    php82-fileinfo \
+    php82-json \
+    php82-xml \
+    php82-xmlwriter \
+    php82-simplexml \
+    php82-dom \
+    php82-pdo_mysql \
+    php82-pdo_sqlite \
+    php82-tokenizer \
+    php82-pecl-redis \
+    php82-dev \
+    php82-pear \
+    php82-exif \
+    php82-ctype \
+    php82-xmlreader \
+    php82-dev \
     autoconf \
     supervisor
 
 # Create symlink so programs depending on `php` still function
-RUN ln -s /usr/bin/php81 /usr/bin/php
-RUN ln -s /usr/bin/pecl81 /usr/bin/pecl
+RUN ln -s /usr/bin/php82 /usr/bin/php
+RUN ln -s /usr/bin/pecl82 /usr/bin/pecl
 
 
 # ## Apple Silicon
@@ -94,8 +94,8 @@ RUN chown -R nobody.nobody /.composer
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
-COPY config/fpm-pool.conf /etc/php81/php-fpm.d/www.conf
-COPY config/php.ini /etc/php81/conf.d/custom.ini
+COPY config/fpm-pool.conf /etc/php82/php-fpm.d/www.conf
+COPY config/php.ini /etc/php82/conf.d/custom.ini
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
