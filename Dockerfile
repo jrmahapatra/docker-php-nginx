@@ -52,7 +52,10 @@ RUN apk add --no-cache \
     php81-xmlreader \
     php81-dev \
     autoconf \
-    supervisor
+    supervisor \
+    nodejs \
+    npm \
+    chromium
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php81 /usr/bin/php
