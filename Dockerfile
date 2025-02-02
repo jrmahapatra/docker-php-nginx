@@ -87,8 +87,7 @@ RUN ln -s /usr/bin/pecl82 /usr/bin/pecl
 # Install composer from the official image
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 
-RUN mkdir /.composer
-RUN chown -R nobody.nobody /.composer
+RUN mkdir -p /.composer && chown -R nobody:nobody /.composer
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/nginx.conf
@@ -101,7 +100,7 @@ COPY config/php.ini /etc/php82/conf.d/custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Make sure files/folders needed by the processes are accessable when they run under the nobody user
-RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
+RUN chown -R nobody:nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 
 # Switch to use a non-root user from here on
 USER nobody
