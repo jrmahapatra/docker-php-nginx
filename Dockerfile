@@ -50,7 +50,7 @@ RUN apk add --no-cache \
     php81-exif \
     php81-ctype \
     php81-xmlreader \
-    php81-dev \
+    php81-dev \    
     autoconf \
     supervisor \
     nodejs \
@@ -85,6 +85,9 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc   | gpg --import -
 RUN  apk add --allow-untrusted msodbcsql18_18.3.2.1-1_$architecture.apk
 RUN  apk add --allow-untrusted mssql-tools18_18.3.1.1-1_$architecture.apk
 RUN pecl install sqlsrv pdo_sqlsrv
+
+RUN apk add --no-cache ${PHPIZE_DEPS} \
+    && pecl install dbase 
 
 
 # Install composer from the official image
