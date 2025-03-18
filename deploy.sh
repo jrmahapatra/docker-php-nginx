@@ -1,5 +1,5 @@
 # Remove the old image if it exists (ignore errors if it doesn't)
-docker image rm mjanaki/php82-alpine-nginx:latest 2>/dev/null || true
+docker image rm mjanaki/php82mssql-alpine-nginx:latest 2>/dev/null || true
 
 # Create a new builder instance or use existing one
 docker buildx create --name mybuilder --use --append || docker buildx use mybuilder
@@ -13,5 +13,5 @@ docker buildx create --name mybuilder --use --append || docker buildx use mybuil
 
 docker buildx build --platform linux/arm64 \
     --build-arg TARGETARCH \
-    -t mjanaki/php82-alpine-nginx:latest . \
+    -t mjanaki/php82mssql-alpine-nginx:latest . \
     --push    
