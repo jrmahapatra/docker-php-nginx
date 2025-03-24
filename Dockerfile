@@ -56,7 +56,7 @@ RUN apk add --no-cache \
 
 # Create symlink so programs depending on `php` still function
 RUN ln -s /usr/bin/php83 /usr/bin/php
-RUN ln -s /usr/bin/pecl82 /usr/bin/pecl
+RUN ln -s /usr/bin/pecl83 /usr/bin/pecl
 
 
 ## Apple Silicon
