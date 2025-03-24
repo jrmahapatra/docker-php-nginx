@@ -1,2 +1,2 @@
-docker image rm mjanaki/php82-alpine-nginx:latest
-docker build --tag mjanaki/php82-alpine-nginx:latest .
+docker image rm mjanaki/php83-mssql-alpine-nginx:latest
+docker build --tag mjanaki/php83-mssql-alpine-nginx:latest .
