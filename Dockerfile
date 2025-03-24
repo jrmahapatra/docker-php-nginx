@@ -19,43 +19,43 @@ RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 RUN apk add --no-cache \
     curl \
     nginx \
-    php82 \
-    php82-common \
-    php82-fpm \
-    php82-intl \
-    php82-gd \
-    php82-mysqli \
-    php82-pdo \
-    php82-opcache \
-    php82-zip \
-    php82-phar \
-    php82-iconv \
-    php82-cli \
-    php82-curl \
-    php82-openssl \
-    php82-mbstring \
-    php82-tokenizer \
-    php82-fileinfo \
-    php82-json \
-    php82-xml \
-    php82-xmlwriter \
-    php82-simplexml \
-    php82-dom \
-    php82-pdo_mysql \
-    php82-pdo_sqlite \
-    php82-tokenizer \
-    php82-pecl-redis \
-    php82-dev \
-    php82-pear \
-    php82-exif \
-    php82-ctype \
-    php82-xmlreader \
-    php82-dev \
+    php84 \
+    php84-common \
+    php84-fpm \
+    php84-intl \
+    php84-gd \
+    php84-mysqli \
+    php84-pdo \
+    php84-opcache \
+    php84-zip \
+    php84-phar \
+    php84-iconv \
+    php84-cli \
+    php84-curl \
+    php84-openssl \
+    php84-mbstring \
+    php84-tokenizer \
+    php84-fileinfo \
+    php84-json \
+    php84-xml \
+    php84-xmlwriter \
+    php84-simplexml \
+    php84-dom \
+    php84-pdo_mysql \
+    php84-pdo_sqlite \
+    php84-tokenizer \
+    php84-pecl-redis \
+    php84-dev \
+    php84-pear \
+    php84-exif \
+    php84-ctype \
+    php84-xmlreader \
+    php84-dev \
     autoconf \
     supervisor
 
 # Create symlink so programs depending on `php` still function
-RUN ln -s /usr/bin/php82 /usr/bin/php
+RUN ln -s /usr/bin/php84 /usr/bin/php
 RUN ln -s /usr/bin/pecl82 /usr/bin/pecl
 
 
@@ -93,8 +93,8 @@ RUN mkdir -p /.composer && chown -R nobody:nobody /.composer
 COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # Configure PHP-FPM
-COPY config/fpm-pool.conf /etc/php82/php-fpm.d/www.conf
-COPY config/php.ini /etc/php82/conf.d/custom.ini
+COPY config/fpm-pool.conf /etc/php84/php-fpm.d/www.conf
+COPY config/php.ini /etc/php84/conf.d/custom.ini
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
